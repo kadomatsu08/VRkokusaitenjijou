@@ -32,7 +32,6 @@ namespace VrKokusaitenjijo.Tools
         {
             Debug.Log(_leftControllerState.ToString());
             Debug.Log(_rightControllerState.ToString());
-
         }
     }
 }

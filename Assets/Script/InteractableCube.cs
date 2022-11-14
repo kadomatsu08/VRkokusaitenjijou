@@ -22,7 +22,7 @@ public class InteractableCube : MonoBehaviour , IDisposable
         _baseInteractable.activated.AddListener(DebugEvent);
         _baseInteractable.deactivated.AddListener(DebugEvent);
 
-        DoAsync().Forget();
+        // DoAsync().Forget();
     }
 
     async UniTask DoAsync()

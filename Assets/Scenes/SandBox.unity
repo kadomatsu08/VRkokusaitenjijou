@@ -1085,14 +1085,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 588530374}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 1.428, z: 0}
+  m_LocalRotation: {x: -0.5, y: -0.5, z: -0.5, w: 0.5}
+  m_LocalPosition: {x: 0, y: 1.4279995, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1405277163}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: -90}
 --- !u!1 &688068232
 GameObject:
   m_ObjectHideFlags: 0
@@ -1128,6 +1128,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _baseInteractable: {fileID: 688068234}
+  _mazzleTrans: {fileID: 588530375}
+  _currentBulletPrefab: {fileID: 6587243977154797569, guid: d19900d02c513274895db95238612437,
+    type: 3}
+  _muzzleVelocity: 10
 --- !u!114 &688068234
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2398,6 +2402,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _baseInteractable: {fileID: 1493218619}
+  _mazzleTrans: {fileID: 0}
+  _currentBulletPrefab: {fileID: 0}
+  _muzzleVelocity: 0
 --- !u!1 &1594946528
 GameObject:
   m_ObjectHideFlags: 0
@@ -2463,6 +2470,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _destroyTimeLimit: 10
+--- !u!54 &1874377585
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1874377579}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &2048747103
 GameObject:
   m_ObjectHideFlags: 0

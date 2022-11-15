@@ -64,4 +64,13 @@ public abstract class BulletBase : MonoBehaviour
         obj._muzzleVelocity = speed;
         return obj;
     }
+
+    /// <summary>
+    /// ものにあたったときの挙動を定義する
+    /// </summary>
+    protected void OnHit()
+    {
+        
+    }
+
 }

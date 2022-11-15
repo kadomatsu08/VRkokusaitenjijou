@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using Mono.Cecil.Cil;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.LowLevel;
 using UnityEngine.XR.Interaction.Toolkit;
@@ -18,6 +19,9 @@ namespace VrKokusaitenjijo.SandBox
     public class InteractableCube : MonoBehaviour , IDisposable
     {
         [SerializeField] private XRBaseInteractable _baseInteractable;
+        [SerializeField] private Transform          _mazzleTrans;
+        [SerializeField] private GameObject         _currentBulletPrefab;
+        [SerializeField] private float              _muzzleVelocity;
         
         // Start is called before the first frame update
         void Start()
@@ -25,6 +29,7 @@ namespace VrKokusaitenjijo.SandBox
             _baseInteractable.selectEntered.AddListener(DebugEvent);
             _baseInteractable.selectExited.AddListener(DebugEvent);
             _baseInteractable.activated.AddListener(DebugEvent);
+            _baseInteractable.activated.AddListener(Fire);
             _baseInteractable.deactivated.AddListener(DebugEvent);
 
             // DoAsync().Forget();
@@ -58,6 +63,12 @@ namespace VrKokusaitenjijo.SandBox
         {
             Dispose();
             Debug.Log("OnDestroy");
+        }
+
+        void Fire(ActivateEventArgs args)
+        {
+            var bullet = Instantiate(_currentBulletPrefab, _mazzleTrans.position, _mazzleTrans.rotation);
+            bullet.GetComponent<BulletBase>().MuzzleVelocity = _muzzleVelocity;
         }
     }
 }

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8921109483164313006}
   - component: {fileID: 8921109483164313005}
   m_Layer: 0
-  m_Name: Text (TMP) (1)
+  m_Name: Remaining
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -147,7 +147,7 @@ GameObject:
   - component: {fileID: 8921109483304562463}
   - component: {fileID: 8921109483304562462}
   m_Layer: 0
-  m_Name: Text (TMP)
+  m_Name: ScoreCaption
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -282,7 +282,7 @@ GameObject:
   - component: {fileID: 8921109483393292046}
   - component: {fileID: 8921109483393292045}
   m_Layer: 0
-  m_Name: Text (TMP)
+  m_Name: RemainingCaption
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -574,7 +574,7 @@ GameObject:
   - component: {fileID: 8921109484346894250}
   - component: {fileID: 8921109484346894249}
   m_Layer: 0
-  m_Name: Text (TMP)
+  m_Name: Score
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

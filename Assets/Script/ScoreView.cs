@@ -12,7 +12,6 @@ public class ScoreView : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _scoreText;
     [SerializeField] private TextMeshProUGUI _remainingText;
     
-    // Start is called before the first frame update
     void Start()
     {
         _gameManager.CurrentScoreRP

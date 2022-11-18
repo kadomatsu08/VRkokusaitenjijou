@@ -1685,6 +1685,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _currentScore:
     value: 0
+  _targetPrefab: {fileID: 2958224036174505322, guid: f20a6e82dce6e724eb08d41d46cc8db9,
+    type: 3}
+  _targetLifetime: 2
   _remainingTarget:
     value: 0
 --- !u!1 &688068232

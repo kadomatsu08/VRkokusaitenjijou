@@ -57,7 +57,7 @@ public class GameManager : MonoBehaviour
         // ターゲットを特定の間隔でスポーンさせる
         
         var targetCts = new CancellationTokenSource();
-        TargetLifeTimer(targetCts.Token);
+        TargetLifeTimer(targetCts.Token).Forget();
 
     }
 

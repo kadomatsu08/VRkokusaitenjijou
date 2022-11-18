@@ -48,12 +48,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3d102af56896f0459b5e1d09d4923db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitSound1: {fileID: 0}
-  hitSound2: {fileID: 0}
-  hitSound3: {fileID: 0}
-  hitSound4: {fileID: 0}
-  spawnSound: {fileID: 0}
-  despawnSound: {fileID: 0}
+  _hitSounds:
+  - {fileID: 8300000, guid: a1506099b74325749a1372aab67c95cc, type: 3}
+  - {fileID: 8300000, guid: 4a2eaf96a30c017449fee46214d5664f, type: 3}
+  - {fileID: 8300000, guid: 9853a89a853495241ac62e32d39dc0ca, type: 3}
+  - {fileID: 8300000, guid: 39c0de4425415814993d5e7ebc28b209, type: 3}
+  _spawnSound: {fileID: 8300000, guid: 269fd6ed5538e864c8d40fcf0e26b2a0, type: 3}
+  _despawnSound: {fileID: 8300000, guid: 52780308e0b0df14bb0da9d7490e92e9, type: 3}
 --- !u!54 &1249957250430546864
 Rigidbody:
   m_ObjectHideFlags: 0

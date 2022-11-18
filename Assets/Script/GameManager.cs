@@ -57,22 +57,25 @@ public class GameManager : MonoBehaviour
         // ターゲットを特定の間隔でスポーンさせる
         
         var targetCts = new CancellationTokenSource();
-        TargetLifeTimer(targetCts.Token).Forget();
+        TargetLifeTimer(targetCts).Forget();
 
     }
 
-    async UniTaskVoid TargetLifeTimer(CancellationToken token)
+    async UniTaskVoid TargetLifeTimer(CancellationTokenSource token)
     {
-        // キャンセルするまで以下の処理を行う
+        // キャンセルするまで、定期的に的のスポーンとデスポーンを繰り返す
         while (!token.IsCancellationRequested)
         {
             await UniTask.Delay((int) _targetLifetime * 1000);
             
-            Debug.Log("await timer");
             var target = Instantiate(_targetPrefab);
             
             await UniTask.Delay((int) _targetLifetime * 1000);
-            Destroy(target);
+
+            if (target)
+            {
+                target.GetComponent<Target>().Despawn();
+            }
         }
     }
 }

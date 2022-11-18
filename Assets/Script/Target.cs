@@ -19,10 +19,6 @@ public class Target : MonoBehaviour
     private void Start()
     {
         _audioSource = GetComponent<AudioSource>();
-    }
-
-    private void Active()
-    {
         _audioSource.PlayOneShot(_spawnSound);
     }
     
@@ -32,7 +28,7 @@ public class Target : MonoBehaviour
     /// <param name="collision"></param>
     private void OnCollisionEnter(Collision collision)
     {
-        _audioSource.PlayOneShot(AudioRandomizer(_hitSounds));
+        AudioSource.PlayClipAtPoint(AudioRandomizer(_hitSounds), this.transform.position);
         Destroy(this.gameObject);
     }
 
@@ -41,7 +37,7 @@ public class Target : MonoBehaviour
     /// </summary>
     public void Despawn()
     {
-        _audioSource.PlayOneShot(_despawnSound);
+        AudioSource.PlayClipAtPoint(_despawnSound , this.transform.position);
         Destroy(this.gameObject);
     }
 

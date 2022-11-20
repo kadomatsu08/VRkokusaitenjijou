@@ -3,17 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
+using UniRx;
 using UnityEngine.Android;
 
 [RequireComponent(typeof(AudioSource))]
 public class Target : MonoBehaviour
 {
-    [SerializeField] private AudioClip[] _hitSounds;
-    [SerializeField] private AudioClip   _spawnSound;
-    [SerializeField] private AudioClip   _despawnSound;
-    private                  GameManager _gameManager;
-
-    private AudioSource _audioSource;
+    [SerializeField] private AudioClip[]    _hitSounds;
+    [SerializeField] private AudioClip      _spawnSound;
+    [SerializeField] private AudioClip      _despawnSound;
+    private                  GameManager    _gameManager;
+    private                  AudioSource    _audioSource;
     
     private void Start()
     {

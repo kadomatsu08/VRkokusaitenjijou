@@ -23,6 +23,9 @@ public class GameManager : MonoBehaviour
     private                  int[]      _targetPositionz;
     private                  Vector3    _targetPositionTemp = new Vector3();
     
+    
+
+    
     /// <summary>
     /// 現在のスコアのReactiveProperty
     /// </summary>
@@ -36,11 +39,21 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public IReadOnlyReactiveProperty<int> RemainingTargetRP => _remainingTarget;
 
+    
+    private ReactiveProperty<GameStatusEnum>          _gameStatus = new ReactiveProperty<GameStatusEnum>();
+    /// <summary>
+    /// 現在のゲームステータス
+    /// </summary>
+    public  IReadOnlyReactiveProperty<GameStatusEnum> GameStatusRP => _gameStatus;
+    
+    
+    
     void Awake()
     {
         // RPのライフタイム管理
         _currentScore.AddTo(this);
         _remainingTarget.AddTo(this);
+        _gameStatus.AddTo(this);
         InitScore();
     }
 
@@ -52,6 +65,7 @@ public class GameManager : MonoBehaviour
     {
         _currentScore.Value = 0;
         _remainingTarget.Value = _startTargetNum;
+        _gameStatus.Value = GameStatusEnum.NotInProgress;
     }
 
     void StartGame()

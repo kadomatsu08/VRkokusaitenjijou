@@ -22,6 +22,8 @@ namespace VrKokusaitenjijo.SandBox
         [SerializeField] private Transform          _mazzleTrans;
         [SerializeField] private GameObject         _currentBulletPrefab;
         [SerializeField] private float              _muzzleVelocity;
+        [SerializeField] private AudioClip          _shootingSound;
+        private                  AudioSource        _audioSource;
         
         // Start is called before the first frame update
         void Start()
@@ -31,6 +33,7 @@ namespace VrKokusaitenjijo.SandBox
             _baseInteractable.activated.AddListener(DebugEvent);
             _baseInteractable.activated.AddListener(Fire);
             _baseInteractable.deactivated.AddListener(DebugEvent);
+            _audioSource = GetComponent<AudioSource>();
 
             // DoAsync().Forget();
         }
@@ -67,6 +70,7 @@ namespace VrKokusaitenjijo.SandBox
 
         void Fire(ActivateEventArgs args)
         {
+            _audioSource.PlayOneShot(_shootingSound);
             var bullet = Instantiate(_currentBulletPrefab, _mazzleTrans.position, _mazzleTrans.rotation);
             bullet.GetComponent<BulletBase>().MuzzleVelocity = _muzzleVelocity;
         }

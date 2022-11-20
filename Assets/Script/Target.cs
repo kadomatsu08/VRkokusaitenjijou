@@ -11,15 +11,18 @@ public class Target : MonoBehaviour
     [SerializeField] private AudioClip[] _hitSounds;
     [SerializeField] private AudioClip   _spawnSound;
     [SerializeField] private AudioClip   _despawnSound;
+    private                  GameManager _gameManager;
 
     private AudioSource _audioSource;
-
-    
     
     private void Start()
     {
         _audioSource = GetComponent<AudioSource>();
         _audioSource.PlayOneShot(_spawnSound);
+        _audioSource.minDistance = 100;
+        //TODO FIndで呼び出しているの気持ち悪いし、ゲームマネージャーに依存しているのもキモチワル
+        _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        
     }
     
     /// <summary>
@@ -28,6 +31,8 @@ public class Target : MonoBehaviour
     /// <param name="collision"></param>
     private void OnCollisionEnter(Collision collision)
     {
+        //TODO 弾以外のものがあたってもこれが呼ばれてしまう
+        _gameManager.addScore(1);
         AudioSource.PlayClipAtPoint(AudioRandomizer(_hitSounds), this.transform.position);
         Destroy(this.gameObject);
     }
@@ -49,5 +54,10 @@ public class Target : MonoBehaviour
     private AudioClip AudioRandomizer(AudioClip[] audios)
     {
         return audios[UnityEngine.Random.Range(0, audios.Length)];
+    }
+
+    private void OnDestroy()
+    {
+        _gameManager.addRemaining(-1);
     }
 }

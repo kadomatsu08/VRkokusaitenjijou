@@ -132,7 +132,7 @@ public class GameManager : MonoBehaviour
     /// スコアを増加させる
     /// </summary>
     /// <param name="num"></param>
-    public void addScore(int num)
+    public void AddScore(int num)
     {
         _currentScore.Value += num;
     }
@@ -141,7 +141,7 @@ public class GameManager : MonoBehaviour
     /// 残り的数を増加させる
     /// </summary>
     /// <param name="num"></param>
-    public void addRemaining(int num)
+    public void AddRemaining(int num)
     {
         _remainingTarget.Value += num;
     }

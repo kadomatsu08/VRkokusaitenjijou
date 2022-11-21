@@ -32,7 +32,7 @@ public class Target : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         //TODO 弾以外のものがあたってもこれが呼ばれてしまう
-        _gameManager.addScore(1);
+        _gameManager.AddScore(1);
         AudioSource.PlayClipAtPoint(AudioRandomizer(_hitSounds), this.transform.position);
         Destroy(this.gameObject);
     }
@@ -58,6 +58,6 @@ public class Target : MonoBehaviour
 
     private void OnDestroy()
     {
-        _gameManager.addRemaining(-1);
+        _gameManager.AddRemaining(-1);
     }
 }

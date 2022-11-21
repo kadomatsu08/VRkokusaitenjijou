@@ -75,14 +75,17 @@ public class GameManager : MonoBehaviour
         }
     }
     
-    private void StartGame()
+    async private UniTaskVoid StartGame()
     {
         InitScore();
         // ターゲットを特定の間隔でスポーンさせる
         _gameStatus.Value = GameStatusEnum.InProgress;
         _inGameCts = new CancellationTokenSource();
         TargetLifeTimer(_inGameCts).Forget();
-
+        
+        // 的の数が0になったら、ゲームを終了する
+        await UniTask.WaitUntil(() => _remainingTarget.Value <= 0, cancellationToken: _inGameCts.Token);
+        CancelGame();
     }
 
     private void CancelGame()
@@ -94,24 +97,41 @@ public class GameManager : MonoBehaviour
     async UniTaskVoid TargetLifeTimer(CancellationTokenSource cts)
     {
         // ゲーム開始時にはじめのスポーンまでに少し猶予を持たせる
-        await UniTask.Delay(TimeSpan.FromSeconds(3), cancellationToken: cts.Token);
+        await UniTask.Delay(TimeSpan.FromSeconds(1.5), cancellationToken: cts.Token);
         
         // キャンセルするまで、定期的に的のスポーンとデスポーンを繰り返す
+        
+        // TODO なんかもっとやりようがありそう
+        // try-catch するのに、defaultを代入しないと下のcatch句のなかで targetを参照できない
+        GameObject target = default;
         while (!cts.IsCancellationRequested)
         {
-            await UniTask.Delay((int) _targetLifetime * 1000, cancellationToken: cts.Token);
-            TargetPositionRandomizer();
-            var target = Instantiate(_targetPrefab, position:_targetPositionTemp, rotation: default);
-            
-            // TODO
-            // なんかここらへん気持ち悪いなー
-            // targetのオブジェクトが消えた瞬間にこのタスクも消えてほしい
-            // 2こ同時に出すとかに対応できない
-            await UniTask.Delay((int) _targetLifetime * 1000,  cancellationToken: cts.Token);
-
-            if (target)
+            try
             {
-                target.GetComponent<Target>().Despawn();
+                await UniTask.Delay((int) _targetLifetime * 1000, cancellationToken: cts.Token);
+                TargetPositionRandomizer();
+                target = Instantiate(_targetPrefab, position:_targetPositionTemp, rotation: default);
+            
+                // TODO
+                // なんかここらへん気持ち悪いなー
+                // targetのオブジェクトが消えた瞬間にこのタスクも消えてほしい
+                // 2こ同時に出すとかに対応できない
+                await UniTask.Delay((int) _targetLifetime * 1000,  cancellationToken: cts.Token);
+
+                if (target)
+                {
+                    target.GetComponent<Target>().Despawn();
+                }
+            }
+            catch (OperationCanceledException e)
+            {
+                // 的がスポーンしているタイミングでゲームがキャンセルされると、的がそのまま残り続けてしまうため
+                // try- catchで的の削除処理を行う
+                if (target)
+                {
+                    target.GetComponent<Target>().Despawn();
+                }
+                throw;
             }
         }
     }

@@ -7,6 +7,7 @@ using UnityEngine;
 using UniRx;
 using Unity.VisualScripting;
 using Cysharp.Threading.Tasks;
+using UnityEngine.LowLevel;
 
 public class GameManager : MonoBehaviour
 {
@@ -17,14 +18,12 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private IntReactiveProperty _currentScore = new IntReactiveProperty(0);
 
-    [SerializeField] private GameObject _targetPrefab;
-    [SerializeField] private float      _targetLifetime  = 0.5f;
-    private                  int[]      _targetPositionx = new int[] {10, 15, 20, 25, 30};
-    private                  int[]      _targetPositionz;
-    private                  Vector3    _targetPositionTemp = new Vector3();
-    
-    
-
+    [SerializeField] private GameObject              _targetPrefab;
+    [SerializeField] private float                   _targetLifetime  = 0.5f;
+    private                  int[]                   _targetPositionx = new int[] {10, 15, 20, 25, 30};
+    private                  int[]                   _targetPositionz;
+    private                  Vector3                 _targetPositionTemp = new Vector3();
+    private                  CancellationTokenSource _inGameCts;
     
     /// <summary>
     /// 現在のスコアのReactiveProperty
@@ -46,8 +45,6 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public  IReadOnlyReactiveProperty<GameStatusEnum> GameStatusRP => _gameStatus;
     
-    
-    
     void Awake()
     {
         // RPのライフタイム管理
@@ -59,31 +56,50 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        StartGame();
     }
     void InitScore()
     {
         _currentScore.Value = 0;
         _remainingTarget.Value = _startTargetNum;
-        _gameStatus.Value = GameStatusEnum.NotInProgress;
     }
 
-    void StartGame()
+    public void ChangeGameStatus()
+    {
+        if (_gameStatus.Value == GameStatusEnum.InProgress)
+        {
+            CancelGame();
+        }
+        else if (_gameStatus.Value == GameStatusEnum.NotInProgress)
+        {
+            StartGame();
+        }
+    }
+    
+    private void StartGame()
     {
         InitScore();
         // ターゲットを特定の間隔でスポーンさせる
-        
-        var targetCts = new CancellationTokenSource();
-        TargetLifeTimer(targetCts).Forget();
+        _gameStatus.Value = GameStatusEnum.InProgress;
+        _inGameCts = new CancellationTokenSource();
+        TargetLifeTimer(_inGameCts).Forget();
 
     }
 
-    async UniTaskVoid TargetLifeTimer(CancellationTokenSource token)
+    private void CancelGame()
     {
+        _inGameCts.Cancel();
+        _gameStatus.Value = GameStatusEnum.NotInProgress;
+    }
+
+    async UniTaskVoid TargetLifeTimer(CancellationTokenSource cts)
+    {
+        // ゲーム開始時にはじめのスポーンまでに少し猶予を持たせる
+        await UniTask.Delay(TimeSpan.FromSeconds(3), cancellationToken: cts.Token);
+        
         // キャンセルするまで、定期的に的のスポーンとデスポーンを繰り返す
-        while (!token.IsCancellationRequested)
+        while (!cts.IsCancellationRequested)
         {
-            await UniTask.Delay((int) _targetLifetime * 1000);
+            await UniTask.Delay((int) _targetLifetime * 1000, cancellationToken: cts.Token);
             TargetPositionRandomizer();
             var target = Instantiate(_targetPrefab, position:_targetPositionTemp, rotation: default);
             
@@ -91,7 +107,7 @@ public class GameManager : MonoBehaviour
             // なんかここらへん気持ち悪いなー
             // targetのオブジェクトが消えた瞬間にこのタスクも消えてほしい
             // 2こ同時に出すとかに対応できない
-            await UniTask.Delay((int) _targetLifetime * 1000);
+            await UniTask.Delay((int) _targetLifetime * 1000,  cancellationToken: cts.Token);
 
             if (target)
             {

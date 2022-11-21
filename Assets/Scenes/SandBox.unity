@@ -2202,8 +2202,9 @@ GameObject:
   - component: {fileID: 1082188733}
   - component: {fileID: 1082188732}
   - component: {fileID: 1082188731}
+  - component: {fileID: 1082188734}
   m_Layer: 0
-  m_Name: Start
+  m_Name: StartCancel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2287,6 +2288,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1082188729}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1082188734
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1082188729}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19d8f554cb71e1f40b3075a763ab6ba8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cancel: {fileID: 2100000, guid: b57ae6444075a8948a050e7fbca48f50, type: 2}
+  _start: {fileID: 2100000, guid: 8f09d94c69fed044b809223a337702be, type: 2}
 --- !u!1 &1235306860
 GameObject:
   m_ObjectHideFlags: 0

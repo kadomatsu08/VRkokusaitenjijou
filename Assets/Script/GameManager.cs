@@ -131,7 +131,7 @@ public class GameManager : MonoBehaviour
                 {
                     target.GetComponent<Target>().Despawn();
                 }
-                throw;
+                throw e;
             }
         }
     }

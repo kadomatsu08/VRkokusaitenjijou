@@ -3,7 +3,6 @@ using System.Threading;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using Cysharp.Threading.Tasks.Triggers;
-using UnityEditor.U2D;
 
 /// <summary>
 /// 弾を意味するベースクラス

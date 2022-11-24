@@ -878,6 +878,7 @@ GameObject:
   - component: {fileID: 391758236}
   - component: {fileID: 391758235}
   - component: {fileID: 391758234}
+  - component: {fileID: 391758238}
   m_Layer: 0
   m_Name: LeftHand Controller
   m_TagString: Untagged
@@ -1147,7 +1148,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_SelectActionTrigger: 0
-  m_HideControllerOnSelect: 1
+  m_HideControllerOnSelect: 0
   m_AllowHoveredActivate: 0
   m_PlayAudioClipOnSelectEntered: 0
   m_AudioClipForOnSelectEntered: {fileID: 0}
@@ -1386,6 +1387,20 @@ MonoBehaviour:
     m_Reference: {fileID: 7779212132400271959, guid: c348712bda248c246b8c49b3db54643f,
       type: 3}
   m_ButtonPressPoint: 0.5
+--- !u!114 &391758238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 391758232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 310ea12271330f3429093d9f616485ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rayInteractor: {fileID: 391758236}
+  _interactorLineVisual: {fileID: 391758234}
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -2384,6 +2399,7 @@ GameObject:
   - component: {fileID: 1235306864}
   - component: {fileID: 1235306863}
   - component: {fileID: 1235306862}
+  - component: {fileID: 1235306866}
   m_Layer: 0
   m_Name: RightHand Controller
   m_TagString: Untagged
@@ -2892,6 +2908,20 @@ MonoBehaviour:
     m_Reference: {fileID: 875253871413052681, guid: c348712bda248c246b8c49b3db54643f,
       type: 3}
   m_ButtonPressPoint: 0.5
+--- !u!114 &1235306866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1235306860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 310ea12271330f3429093d9f616485ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rayInteractor: {fileID: 1235306864}
+  _interactorLineVisual: {fileID: 1235306862}
 --- !u!114 &1396802184 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8921109483164313005, guid: 33124cf8a883cc9408cce890dd1e50cc,

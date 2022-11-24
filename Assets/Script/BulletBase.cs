@@ -1,9 +1,9 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
+using Cysharp.Threading.Tasks.Triggers;
+using UnityEditor.U2D;
 
 /// <summary>
 /// 弾を意味するベースクラス
@@ -13,10 +13,16 @@ using Cysharp.Threading.Tasks;
 public abstract class BulletBase : MonoBehaviour
 {
     // 弾の生存時間(秒単位)
-    [SerializeField] private int       _destroyTimeLimit = 5;
-    private                  Rigidbody _rigidbody;
-    private                float     _muzzleVelocity;
-    protected                bool      _doSetMazzleVelocity = false;
+    [SerializeField] private int                     _destroyTimeLimit = 5;
+    private                  Rigidbody               _rigidbody;
+    private                  float                   _muzzleVelocity;
+    protected                bool                    _doSetMazzleVelocity = false;
+    private                  CancellationToken _ct;
+
+    private void OnConnectedToServer()
+    {
+        throw new NotImplementedException();
+    }
 
     public float MuzzleVelocity
     {
@@ -27,8 +33,14 @@ public abstract class BulletBase : MonoBehaviour
 
     void Awake()
     {
-        DestroyTimer(this.gameObject.GetCancellationTokenOnDestroy()).Forget();
         _rigidbody = GetComponent<Rigidbody>();
+        _ct = this.GetCancellationTokenOnDestroy();
+        
+        // 一定時間後に弾をdestroyする
+        DestroyTimer(_ct).Forget();
+        // 弾が何かにあたったときdestroyする
+        OnHit(_ct).Forget();
+
     }
     
     void Update()
@@ -68,9 +80,13 @@ public abstract class BulletBase : MonoBehaviour
     /// <summary>
     /// ものにあたったときの挙動を定義する
     /// </summary>
-    protected void OnHit()
+    async protected UniTaskVoid OnHit(CancellationToken ct)
     {
-        
+        // 物にあたった場合、弾を削除する
+        // 貫通とか全く考慮していない
+        await this.GetAsyncCollisionEnterTrigger().OnCollisionEnterAsync(ct);
+        Destroy(this.gameObject);
     }
+
 
 }

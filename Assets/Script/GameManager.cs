@@ -71,7 +71,7 @@ public class GameManager : MonoBehaviour
         }
         else if (_gameStatus.Value == GameStatusEnum.NotInProgress)
         {
-            StartGame();
+            StartGame().Forget();
         }
     }
     
